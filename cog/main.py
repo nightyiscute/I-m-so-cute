@@ -16,7 +16,7 @@ class tag(discord.ui.View):
         min_values = 1, # 最少幾個選項
         max_values = 1, # 最多幾個選項
         options = [ # 選項
-            discord.SelectOption(label=jdata[i],description=jdata[i][1]),
+            discord.SelectOption(label=jdata[i][0],description=jdata[i][1]),
             ]
         )
         async def select_callback(self, select, interaction): # the function called when the user is done selecting options
