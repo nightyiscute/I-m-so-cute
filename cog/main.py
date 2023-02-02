@@ -8,18 +8,29 @@ class main(commands.Cog):
         self.bot=bot
     option=discord.Option
 
-    nhentai=discord.SlashCommandGroup("nhentai")
+    nhentai=discord.SlashCommandGroup("nhentai","( ͡° ͜ʖ ͡°)")
     @nhentai.command()
     async def random_num(self,ctx):
         random_int=random.randint(1,999999)
         await ctx.respond(f'https://nhentai.net/g/{random_int}/')
+
     @nhentai.command()
     async def godnum(self,ctx,num:int,page:option(int,"page",required = False)):
         await ctx.respond(f'https://nhentai.net/g/{num}/{page}')
 
+    @nhentai.command()
+    async def tag(self,ctx,tag:str):
+        await ctx.respond(f"https://nhentai.net/tag/{tag}/")
+
+    @nhentai.command()
+    async def parody(self,ctx,parody:str):
+        await ctx.respond(f"https://nhentai.net/parody/{parody}/")
+
     @slash_command(name="ping",description="just ping")
     async def ping(self,ctx):
         await ctx.respond(f"{round(ctx.bot.latency*1000)}(ms)")
+    
+    
 
     
 def setup(bot):
