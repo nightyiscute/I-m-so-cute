@@ -1,6 +1,5 @@
 import random
 import discord
-import json
 import datetime
 from discord.ext import commands
 from discord.commands import slash_command
