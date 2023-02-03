@@ -10,18 +10,15 @@ with open('data.json',mode='r',encoding='utf8')as jfile:
 
 for i in range(143):
     a=i
-
+    
 class tag(discord.ui.View):
-        @discord.ui.select( 
-        tag = "Choose a tag!", # the placeholder text that will be displayed if nothing is selected
-        min_values = 1, # 最少幾個選項
-        max_values = 1, # 最多幾個選項
-        options = [ # 選項
-            discord.SelectOption(label=jdata[a][0],description=jdata[a][1]),
-            ]
-        )
-        async def select_callback(self, select, interaction): # the function called when the user is done selecting options
-            await interaction.response.send_message(f"https://nhentai.net/tag/{select.values[0]}/")
+    @discord.ui.select( 
+    tag = "Choose a tag!", # the placeholder text that will be displayed if nothing is selected
+    min_values = 1, # 最少幾個選項
+    max_values = 1, # 最多幾個選項
+    options = [discord.SelectOption(label=jdata[a][0],description=jdata[a][1])])
+    async def select_callback(self, select, interaction): # the function called when the user is done selecting options
+        await interaction.response.send_message(f"https://nhentai.net/tag/{select.values[0]}/")
 
 class n(commands.Cog):
     def __init__(self,bot):
