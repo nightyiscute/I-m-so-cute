@@ -50,6 +50,11 @@ class main(commands.Cog):
         embed.set_footer(text=f"{ctx.author.display_name}占卜於")
         await ctx.respond(embed=embed)
 
+    @slash_command(name='dice',description='dice number')
+    async def dice(self,ctx,number:int):
+        ranint=random.randint(1,number)
+        await ctx.respond(ranint)
+
     
 def setup(bot):
     bot.add_cog(main(bot))
