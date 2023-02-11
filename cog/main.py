@@ -1,6 +1,7 @@
 import random
 import discord
 import datetime
+import json
 from discord.ext import commands
 from discord.commands import slash_command
 
@@ -9,6 +10,8 @@ class main(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
     option=discord.Option
+    
+    
 
     @slash_command(name="ping",description="just ping")
     async def ping(self,ctx):
@@ -43,7 +46,7 @@ class main(commands.Cog):
         if random_luck=="大凶":
             lcolor=0xff0000
             word="小心血光之災!"
-        embed=discord.Embed(title=random_luck,  color=lcolor,timestamp=datetime.datetime.now())
+        embed=discord.Embed(title=random_luck, color=lcolor, timestamp=datetime.datetime.now())
         embed.set_author(name="今日運氣")
         embed.add_field(name=word,value="以上就是占卜結果", inline=False)
         embed.set_footer(text=f"{ctx.author.display_name}占卜於")
@@ -51,8 +54,15 @@ class main(commands.Cog):
 
     @slash_command(name='dice',description='dice number')
     async def dice(self,ctx,number:int):
+        with open('thing.json',mode='r',encoding='utf8')as jfile: #打開setting.json,模式是read,命名為jfile
+            jdata=json.load(jfile)
         ranint=random.randint(1,number)
-        await ctx.respond(ranint)
+        rancolor=int(random.choices(jdata["color"]))
+        embed=discord.Embed(title=ranint, color="", timestamp=datetime.datetime.now())
+        embed.set_author(name="骰到的數字是:")
+        embed.add_field(name="感謝使用",value="以上就是骰子結果", inline=False)
+        embed.set_footer(text=f"{ctx.author.display_name}骰於")
+        await ctx.respond(embed=embed)
 
     
 def setup(bot):
