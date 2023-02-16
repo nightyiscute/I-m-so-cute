@@ -6,6 +6,7 @@ from discord.ext import commands
 from discord.commands import slash_command
 
 
+
 class main(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
@@ -54,13 +55,11 @@ class main(commands.Cog):
 
     @slash_command(name='dice',description='dice number')
     async def dice(self,ctx,number:int):
-        with open('thing.json',mode='r',encoding='utf8')as jfile: #打開setting.json,模式是read,命名為jfile
-            jdata=json.load(jfile)
+        color=[0xd00606,]
         ranint=random.randint(1,number)
-        rancolor=int(random.choices(jdata["color"]))
-        embed=discord.Embed(title=ranint, color="", timestamp=datetime.datetime.now())
+        embed=discord.Embed(title=ranint, color=discord.Colour.random(), timestamp=datetime.datetime.now())
         embed.set_author(name="骰到的數字是:")
-        embed.add_field(name="感謝使用",value="以上就是骰子結果", inline=False)
+        embed.add_field(name=f"你骰了{number}面骰",value="以上就是骰子結果", inline=False)
         embed.set_footer(text=f"{ctx.author.display_name}骰於")
         await ctx.respond(embed=embed)
 
