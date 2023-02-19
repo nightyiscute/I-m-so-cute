@@ -2,7 +2,6 @@ import random
 import json
 import discord
 from discord.ext import commands
-from discord.ui import View,Select
 
 with open('data.json',mode='r',encoding='utf8')as jfile:
     jdata=json.load(jfile)
