@@ -1,7 +1,6 @@
 import random
 import discord
 import datetime
-import json
 from discord.ext import commands
 from discord.commands import slash_command
 
@@ -14,9 +13,7 @@ class main(commands.Cog):
     
     
 
-    @slash_command(name="ping",description="just ping")
-    async def ping(self,ctx):
-        await ctx.respond(f"{round(ctx.bot.latency*1000)}(ms)")
+    
     
     @slash_command(name="luck",description="text your luck")
     async def luck(self,ctx):
