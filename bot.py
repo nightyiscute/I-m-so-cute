@@ -32,7 +32,8 @@ async def reload(ctx):
             max_values = 1, # 最多幾個選項
             options = [
                 discord.SelectOption(label="n",description="Cog(n)"),
-                discord.SelectOption(label="main",description="Cog(main)")
+                discord.SelectOption(label="main",description="Cog(main)"),
+                discord.SelectOption(label="event",description="Cog(event)")
             ])
     async def callback(interaction): #有選選項時
         bot.reload_extension(f'cog.{reload.values[0]}')
