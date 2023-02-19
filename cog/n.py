@@ -34,6 +34,11 @@ class n(commands.Cog):
     async def tag(self,ctx,tag:str):
         await ctx.respond(f"https://nhentai.net/tag/{tag}/")
     
+    @nhentai.command()
+    async def random_tag(self,ctx):
+        
+        await ctx.respond()
+    
 
 def setup(bot):
     bot.add_cog(n(bot))
