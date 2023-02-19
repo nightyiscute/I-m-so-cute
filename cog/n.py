@@ -22,8 +22,8 @@ class n(commands.Cog):
 
     @nhentai.command()
     async def godnum(self,ctx,num:int,page:option(int,"page",required = False)):
-        if page=="":
-            page=1
+        if page==None:
+            page=""
         await ctx.respond(f'https://nhentai.net/g/{num}/{page}')
 
     @nhentai.command()
@@ -36,8 +36,8 @@ class n(commands.Cog):
     
     @nhentai.command()
     async def random_tag(self,ctx):
-        
-        await ctx.respond()
+        ran=random.randint(0,148)
+        await ctx.respond(f"https://nhentai.net/tag/{jdata[ran][0]}/")
     
 
 def setup(bot):
