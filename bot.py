@@ -19,9 +19,12 @@ for file in os.listdir('./cog'):
             
 @bot.slash_command(name="ping",description="just ping")
 async def ping(ctx):
-    await ctx.respond(f"{round(ctx.bot.latency*1000)}(ms)")
+    embed=discord.Embed(title="目前ping值", description=f"{round(ctx.bot.latency*1000)}(ms)", color=discord.Colour.random())
+    embed.add_field(name="", value="", inline=False)
+    await ctx.respond(embed=embed)
+    
 
-@bot.slash_command(name="reload",description="重載Cog")
+@bot.slash_command(description="重載Cog")
 async def reload(ctx):
     reload=discord.ui.Select(
         placeholder= "Choose a Cog!", # 沒選選項時選項框上的字
@@ -31,11 +34,10 @@ async def reload(ctx):
                 discord.SelectOption(label="n",description="Cog(n)"),
                 discord.SelectOption(label="main",description="Cog(main)")
             ])
-    async def select_callback(Select, interaction): #有選選項時
-        bot.reload_extension(f'cog.{Select.values[0]}',recursive=True)
+    async def callback(interaction): #有選選項時
+        bot.reload_extension(f'cog.{Select.values[0]}')
         await interaction.response.send_message(f"{Select.values[0]}載入成功")
-
-    reload.callback = select_callback   
+    reload.callback = callback   
     view = View(timeout=0)
     view.add_item(reload)  
     await ctx.respond("Choose reload Cog",view=view)
