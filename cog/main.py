@@ -52,7 +52,6 @@ class main(commands.Cog):
 
     @slash_command(name='dice',description='dice number')
     async def dice(self,ctx,number:int):
-        color=[0xd00606,]
         ranint=random.randint(1,number)
         embed=discord.Embed(title=ranint, color=discord.Colour.random(), timestamp=datetime.datetime.now())
         embed.set_author(name="骰到的數字是:")
