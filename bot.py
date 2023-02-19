@@ -35,13 +35,13 @@ async def reload(ctx):
                 discord.SelectOption(label="main",description="Cog(main)")
             ])
     async def callback(interaction): #有選選項時
-        bot.reload_extension(f'cog.{Select.values[0]}')
-        await interaction.response.send_message(f"{Select.values[0]}載入成功")
+        bot.reload_extension(f'cog.{reload.values[0]}')
+        await interaction.response.send_message(f"{reload.values[0]}載入成功")
+
     reload.callback = callback   
     view = View(timeout=0)
     view.add_item(reload)  
     await ctx.respond("Choose reload Cog",view=view)
-
 
 
 token=jdata["token"]
