@@ -1,5 +1,6 @@
 import random
 import discord
+import math
 import datetime
 from discord.ext import commands
 from discord.commands import slash_command
@@ -58,6 +59,42 @@ class main(commands.Cog):
         embed.add_field(name=f"你骰了{number}面骰",value="以上就是骰子結果", inline=False)
         embed.set_footer(text=f"{ctx.author.display_name}骰於")
         await ctx.respond(embed=embed)
+
+    @slash_command(name="計算機",description="就是個計算機")
+    async def computer(self,ctx,number1:int,count:str,number2:int):
+        
+        if count=="+":
+            embed=discord.Embed(title=number1+number2,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+
+        elif count=="-":
+            embed=discord.Embed(title=number1-number2,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+
+        elif count=="*":
+            embed=discord.Embed(title=number1*number2,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+
+        elif count=="/":
+            embed=discord.Embed(title=number1/number2,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+        
+        elif count=="**":
+            for i in range(1,number2):
+                number1=number1*number1
+                i=number1
+            embed=discord.Embed(title=i,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+
+        elif count=="//":
+            for i in range(1,number2):
+                number1=math.sqrt(number1)
+            embed=discord.Embed(title=number1,color=discord.Colour.random())
+            await ctx.respond(embed=embed)
+
+        else:   
+            embed=discord.Embed(title="count只有 +,-,*,/,**,// 喔",color=discord.Colour.random())
+            await ctx.respond(embed=embed)
 
     
 def setup(bot):
