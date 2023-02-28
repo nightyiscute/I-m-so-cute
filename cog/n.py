@@ -7,7 +7,7 @@ with open('data.json',mode='r',encoding='utf8')as jfile:
     jdata=json.load(jfile)
 
 
-class n(commands.Cog):
+class hentai(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
     option=discord.Option
@@ -40,4 +40,4 @@ class n(commands.Cog):
     
 
 def setup(bot):
-    bot.add_cog(n(bot))
+    bot.add_cog(hentai(bot))
