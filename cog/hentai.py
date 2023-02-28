@@ -37,6 +37,14 @@ class hentai(commands.Cog):
     async def random_tag(self,ctx):
         ran=random.randint(0,148)
         await ctx.respond(f"https://nhentai.net/tag/{jdata[ran][0]}/")
+
+    禁漫=discord.SlashCommandGroup("禁漫","就是禁漫")
+
+    @禁漫.command()
+    async def godnum(self,ctx,num:int,page:option(int,"page",required=False)):
+        if page==None:
+            page=""
+        await ctx.respond(f'https://18comic.vip/photo/{num}/{page}')
     
 
 def setup(bot):
