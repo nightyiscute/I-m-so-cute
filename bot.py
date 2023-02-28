@@ -31,7 +31,7 @@ async def reload(ctx):
             min_values = 1, # 最少幾個選項
             max_values = 1, # 最多幾個選項
             options = [
-                discord.SelectOption(label="n",description="Cog(n)"),
+                discord.SelectOption(label="hentai",description="Cog(hentai)"),
                 discord.SelectOption(label="main",description="Cog(main)"),
                 discord.SelectOption(label="event",description="Cog(event)")
             ])
