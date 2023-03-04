@@ -1,6 +1,5 @@
 import random
 import discord
-import math
 import datetime
 from discord.ext import commands
 from discord.commands import slash_command
@@ -80,15 +79,16 @@ class main(commands.Cog):
             await ctx.respond(embed=embed)
         
         elif count=="**":
+            number1a=number1
             for i in range(1,number2):
-                number1=number1*number1
-                i=number1
-            embed=discord.Embed(title=i,color=discord.Colour.random())
+                number1=number1*number1a
+            embed=discord.Embed(title=number1,color=discord.Colour.random())
             await ctx.respond(embed=embed)
 
         elif count=="//":
+            number1a=number1
             for i in range(1,number2):
-                number1=math.sqrt(number1)
+                number1=number1a**0.5
             embed=discord.Embed(title=number1,color=discord.Colour.random())
             await ctx.respond(embed=embed)
 
