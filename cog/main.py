@@ -93,7 +93,7 @@ class main(commands.Cog):
             await ctx.respond(embed=embed)
 
         else:   
-            embed=discord.Embed(title="count只有 +,-,*,/,**,// 喔",color=discord.Colour.random())
+            embed=discord.Embed(title="count只有 +,-,*,/,^,√ 喔",color=discord.Colour.random())
             await ctx.respond(embed=embed)
 
     
