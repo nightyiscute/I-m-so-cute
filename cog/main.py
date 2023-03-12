@@ -60,7 +60,7 @@ class main(commands.Cog):
         await ctx.respond(embed=embed)
 
     @slash_command(name="計算機",description="就是個計算機")
-    async def computer(self,ctx,number1:int,count:option(str,"運算符號",choice=["+","-","*","/","√","^"],required=True),number2:int):
+    async def computer(self,ctx,number1:int,count:option(str,"運算符號",choices=["+","-","*","/","√","^"]),number2:int):
         
         if count=="+":
             embed=discord.Embed(title=number1+number2,color=discord.Colour.random())
