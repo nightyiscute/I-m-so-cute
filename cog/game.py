@@ -7,7 +7,7 @@ from discord.commands import slash_command
 class game(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
-
+    
     @slash_command(name="比大小",description="比你和機器人誰比較大(?")
     async def 比大小(self,ctx):
         rannum1=random.randint(0,100)
