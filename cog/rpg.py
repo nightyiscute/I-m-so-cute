@@ -51,18 +51,27 @@ class rpg(commands.Cog):
         userid = str(ctx.author.id)
         user = ctx.author.name 
         with open('thing.json', 'r', encoding='utf-8') as jdata:
-          data = json.load(jdata)
+            data = json.load(jdata)
 
-        if data[userid] ==None:
-            await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+        if data.get(userid) is None:
+                await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+                json.dump(data, jdata, ensure_ascii=False)
+                jdata.close()
+
         else:
-            data[userid]["rock"]+=1
-            data[userid]["power"]-=1
-            data[userid]["rock"]+=ranitem/50
-            await ctx.respond(f"恭喜{user}獲得{ranitem/50+1}個石頭!")
-            if data[userid]["Tool_rarity"]>0:
-                data[userid]["iron"]+=1
-                data[userid]["Tool_durable"]-=1
+            with open('thing.json', 'w', encoding='utf-8') as jdata:
+                data[userid]["rock"]+=1
+                data[userid]["power"]-=1
+                data[userid]["rock"]+=int(ranitem/50)
+                await ctx.respond(f"恭喜{user}獲得{int(ranitem/50+1)}個石頭!")
+                    
+
+                if data[userid]["Tool_rarity"]>0:
+                    data[userid]["iron"]+=int(ranitem/60)
+                    data[userid]["Tool_durable"]-=1
+                    await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個鐵礦!")
+                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
+                jdata.close()
          
                 
             
