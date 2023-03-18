@@ -67,9 +67,17 @@ class rpg(commands.Cog):
                     
 
                 if data[userid]["Tool_rarity"]>0:
+                    data[userid]["rock"]+=int(ranitem/50)
                     data[userid]["iron"]+=int(ranitem/60)
                     data[userid]["Tool_durable"]-=1
                     await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個鐵礦!")
+
+                elif data[userid]["Tool_rarity"]>1:
+                    data[userid]["rock"]+=int(ranitem/40)
+                    data[userid]["iron"]+=int(ranitem/50)
+                    data[userid]["RedIron"]+=int(ranitem/60)
+                    await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個赤鐵礦!")
+                    
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
                 jdata.close()
          
