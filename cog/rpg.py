@@ -8,27 +8,35 @@ from discord.commands import slash_command
 class rpg(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
-    class ore():
-        def __init__(self,value,rarity):
+    class item():
+        def __init__(self,value,rarity,burn_time,type:str):
             self.value=value
             self.rarity=rarity
+            self.burn_time=burn_time
+            self.type=type
     
-    rock=ore(20,1)
-    iron=ore(40,2)
-    RedIron=ore(60,2)
+    class tool():
+        def __init__(self,rarity,durable):
+            self.rarity=rarity
+            self.durable=durable
+    
+    Rock=item(20,1,0,"stone")
+    Iron=item(40,2,0,"stone")
+    RedIron=item(60,2,0,"stone")
+    Stone_axe=tool(1,20)
     
     @slash_command(name="成立帳戶")
     async def acc(self,ctx):
         userid = str(ctx.author.id)
         user = ctx.author.name
 
-        with open('data.json', 'r', encoding='utf-8') as jdata:
+        with open('thing.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
 
-        if jdata.get(userid) is None:
-            with open('data.json', 'w', encoding='utf-8') as jdata:
-                data[userid] = {"name":user,"money":100,"rock":0,"iron":0,"RedIron":0,"power":100 }
-            json.dump(data, jdata, ensure_ascii=False)
+        if data.get(userid) is None:
+            with open('thing.json', 'w', encoding='utf-8') as jdata:
+                data[userid] = {"name":user,"money":100,"rock":0,"iron":0,"RedIron":0,"power":100,"Tool_rarity":0,"Tool_durable":0 }
+                json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
             await ctx.respond('帳戶建立成功!')
         else:
@@ -39,19 +47,24 @@ class rpg(commands.Cog):
     
 
     async def mine(self,ctx):
-        ranore=random.randint(0,100)
+        ranitem=random.randint(0,100)
         userid = str(ctx.author.id)
         user = ctx.author.name 
-        with open('data.json', 'r', encoding='utf-8') as jdata:
+        with open('thing.json', 'r', encoding='utf-8') as jdata:
           data = json.load(jdata)
 
-        if jdata.get(userid) is None:
+        if data[userid] ==None:
             await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
         else:
             data[userid]["rock"]+=1
             data[userid]["power"]-=1
-            data[userid]["rock"]+=ranore/50
-            await ctx.respond(f"恭喜{user}獲得{ranore/50+1}個石頭!")
+            data[userid]["rock"]+=ranitem/50
+            await ctx.respond(f"恭喜{user}獲得{ranitem/50+1}個石頭!")
+            if data[userid]["Tool_rarity"]>0:
+                data[userid]["iron"]+=1
+                data[userid]["Tool_durable"]-=1
+         
+                
             
 
 
