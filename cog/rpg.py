@@ -47,8 +47,6 @@ class rpg(commands.Cog):
 
 
     @slash_command(name="採礦")
-    
-
     async def mine(self,ctx):
         ranitem=random.randint(0,100)
         userid = str(ctx.author.id)
@@ -66,22 +64,29 @@ class rpg(commands.Cog):
                 data[userid]["rock"]+=1
                 data[userid]["power"]-=1
                 data[userid]["rock"]+=int(ranitem/50)
-                await ctx.respond(f"恭喜{user}獲得{int(ranitem/50+1)}個石頭!")
-                    
+                stone=1
+                iron=0    
+                RedIron=0
 
                 if data[userid]["Pick_level"]>0:
                     data[userid]["rock"]+=int(ranitem/50)
+                    stone+=int(ranitem/50)
                     data[userid]["iron"]+=int(ranitem/60)
+                    iron+=int(ranitem/60)
                     if data[userid]["Pick"]!="hand":
                         data[userid]["Pick_durable"]-=1
-                    await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個鐵礦!")
+                    
 
                 elif data[userid]["Pick_level"]>1:
                     data[userid]["rock"]+=int(ranitem/40)
                     data[userid]["iron"]+=int(ranitem/50)
                     data[userid]["RedIron"]+=int(ranitem/60)
-                    await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個赤鐵礦!")
-                    
+                    stone+=int(ranitem/40)
+                    iron+=int(ranitem/50)
+                    RedIron+=int(ranitem/60)
+
+                embed=discord.Embed(title=f"你獲得石頭{stone}塊,鐵礦{iron}塊,赤鐵礦{RedIron}塊", color=discord.Colour.random())
+                await ctx.respond(embed=embed)
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
             jdata.close()
          
@@ -91,20 +96,7 @@ class rpg(commands.Cog):
         userid = str(ctx.author.id)
         with open('thing.json', 'r', encoding='utf-8') as jdata:
                 data = json.load(jdata)
-
-        def fast(thing1:str,thing2:str,Tool:str,Tool_level:str,Tool_durable:str,method1:int,method2:int,end_method:str,level:int,ctx):
-            if data[userid][thing1]<method1 or data[userid][thing2]<method2:
-                ctx.respond("材料不夠")
-            else:
-                with open("thing.json","w",encoding="utf-8")as jdata:
-                    data[userid][thing1]-=method1
-                    data[userid][thing2]-=method2
-                    data[userid][Tool]=end_method
-                    data[userid][Tool_level]=level
-                    data[userid][Tool_durable]=50+(level-1)*20
-                    ctx.respond(f"恭喜獲得{repices}")
-                    
-        
+ 
         if repices=="石鎬":
             thing1="rock"
             thing2="wood"
@@ -114,7 +106,8 @@ class rpg(commands.Cog):
             m1=3
             m2=2
             end_method=f"{thing1}_{Tool}"
-            end_level=1            
+            end_level=1     
+
         elif repices=="石斧":
             thing1="rock"
             thing2="wood"
@@ -125,6 +118,7 @@ class rpg(commands.Cog):
             m2=2
             end_method=f"{thing1}_{Tool}"
             end_level=1 
+
         elif repices=="鐵鎬":
             thing1="iron"
             thing2="wood"
@@ -135,6 +129,7 @@ class rpg(commands.Cog):
             m2=4
             end_method=f"{thing1}_{Tool}"
             end_level=2 
+
         elif repices=="鐵斧":
             thing1="iron"
             thing2="wood"
@@ -148,6 +143,7 @@ class rpg(commands.Cog):
 
         if data[userid][thing1]<m1 or data[userid][thing2]<m2:
             await ctx.respond("材料不夠")
+
         else:
             with open("thing.json","w",encoding="utf-8")as jdata:
                 data[userid][thing1]-=m1
@@ -158,6 +154,24 @@ class rpg(commands.Cog):
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
             jdata.close()
             await ctx.respond(f"恭喜獲得{repices}")    
+    
+    @slash_command(name="查看物品")
+    async def item(self,ctx):
+        user=ctx.author.name
+        userid = str(ctx.author.id)
+        with open('thing.json', 'r', encoding='utf-8') as jdata:
+            data = json.load(jdata)
+        if data[userid]["name"]==user:
+            embed=discord.Embed(title="您的包包有:",color=discord.Colour.random())
+            embed.add_field(name="石頭:", value=data[userid]["rock"], inline=False)
+            embed.add_field(name="木頭", value=data[userid]["wood"], inline=False)
+            embed.add_field(name="鐵礦", value=data[userid]["iron"], inline=False)
+            embed.add_field(name="neko幣", value=data[userid]["money"], inline=False)
+            await ctx.respond(embed=embed)
+        else:
+            embed=discord.Embed(title="你他喵還沒申請帳號!!!!!",color=0xff0000)
+            await ctx.respond(embed=embed)
+
             
         
 
