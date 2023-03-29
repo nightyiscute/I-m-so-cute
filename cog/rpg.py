@@ -46,7 +46,7 @@ class rpg(commands.Cog):
             await ctx.respond("你已經有帳戶了")
 
 
-    @slash_command(name="採集")
+    @slash_command(name="採礦")
     
 
     async def mine(self,ctx):
@@ -83,37 +83,81 @@ class rpg(commands.Cog):
                     await ctx.respond(f"恭喜{user}獲得{int(ranitem/60+1)}個赤鐵礦!")
                     
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
-                jdata.close()
+            jdata.close()
          
                 
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
         userid = str(ctx.author.id)
+        with open('thing.json', 'r', encoding='utf-8') as jdata:
+                data = json.load(jdata)
 
         def fast(thing1:str,thing2:str,Tool:str,Tool_level:str,Tool_durable:str,method1:int,method2:int,end_method:str,level:int,ctx):
-            with open('thing.json', 'r', encoding='utf-8') as jdata:
-                data = json.load(jdata)
-                if data[userid][thing1]<method1 or data[userid][thing2]<method2:
-                    ctx.respond("材料不夠")
-                else:
-                    with open("thing.json","w",encoding="utf-8")as jdata:
-                        data[userid][thing1]-=method1
-                        data[userid][thing2]-=method2
-                        data[userid][Tool]=end_method
-                        data[userid][Tool_level]=level
-                        data[userid][Tool_durable]=50+(level-1)*20
-                        ctx.respond(f"恭喜獲得{repices}")
+            if data[userid][thing1]<method1 or data[userid][thing2]<method2:
+                ctx.respond("材料不夠")
+            else:
+                with open("thing.json","w",encoding="utf-8")as jdata:
+                    data[userid][thing1]-=method1
+                    data[userid][thing2]-=method2
+                    data[userid][Tool]=end_method
+                    data[userid][Tool_level]=level
+                    data[userid][Tool_durable]=50+(level-1)*20
+                    ctx.respond(f"恭喜獲得{repices}")
                     
         
         if repices=="石鎬":
-            fast("stone","wood","Pick","Pick_level","Pick_durable",3,2,"stone_Pick",1)
+            thing1="rock"
+            thing2="wood"
+            Tool="pick"
+            level=f"{Tool}_level"
+            durable=f"{Tool}_durable"
+            m1=3
+            m2=2
+            end_method=f"{thing1}_{Tool}"
+            end_level=1            
         elif repices=="石斧":
-            fast("stone","wood","Axe","Axe_level","Axe_durable",3,2,"stone_Axe",1)
+            thing1="rock"
+            thing2="wood"
+            Tool="Axe"
+            level=f"{Tool}_level"
+            durable=f"{Tool}_durable"
+            m1=3
+            m2=2
+            end_method=f"{thing1}_{Tool}"
+            end_level=1 
         elif repices=="鐵鎬":
-            fast("iron","wood","Pick","Pick_level","Pick_durable",3,4,"iron_Pick",2)
+            thing1="iron"
+            thing2="wood"
+            Tool="Pick"
+            level=f"{Tool}_level"
+            durable=f"{Tool}_durable"
+            m1=3
+            m2=4
+            end_method=f"{thing1}_{Tool}"
+            end_level=2 
         elif repices=="鐵斧":
-            fast("iron","wood","Axe","Axe_level","Axe_durable",3,4,"iron_Axe",2)
-            
+            thing1="iron"
+            thing2="wood"
+            Tool="Axe"
+            level=f"{Tool}_level"
+            durable=f"{Tool}_durable"
+            m1=3
+            m2=4
+            end_method=f"{thing1}_{Tool}"
+            end_level=2 
+
+        if data[userid][thing1]<m1 or data[userid][thing2]<m2:
+            await ctx.respond("材料不夠")
+        else:
+            with open("thing.json","w",encoding="utf-8")as jdata:
+                data[userid][thing1]-=m1
+                data[userid][thing2]-=m2
+                data[userid][Tool]=end_method
+                data[userid][level]=end_level
+                data[userid][durable]=50+(end_level-1)*20
+                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
+            jdata.close()
+            await ctx.respond(f"恭喜獲得{repices}")    
             
         
 
