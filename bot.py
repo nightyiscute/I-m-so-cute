@@ -34,7 +34,8 @@ async def reload(ctx):
                 discord.SelectOption(label="hentai",description="Cog(hentai)"),
                 discord.SelectOption(label="main",description="Cog(main)"),
                 discord.SelectOption(label="event",description="Cog(event)"),
-                discord.SelectOption(label="game",description="Cog(game)")
+                discord.SelectOption(label="game",description="Cog(game)"),
+                discord.SelectOption(label="RPG",description="Cog(rpg)")
             ])
     async def callback(interaction): #有選選項時
         bot.reload_extension(f'cog.{reload.values[0]}')
