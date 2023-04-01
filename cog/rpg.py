@@ -105,7 +105,7 @@ class rpg(commands.Cog):
         if repices=="石鎬":
             Method1="Rock"
             Method2="Wood"
-            Tool="pick"
+            Tool="Pick"
             level=f"{Tool}_level"
             durable=f"{Tool}_durable"
             Method1_use=3
@@ -168,13 +168,31 @@ class rpg(commands.Cog):
     async def item(self,ctx):
         user=ctx.author.name
         userid = str(ctx.author.id)
+        
         with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
+            
+        if data[userid]["Ore"]["Pick"]=="hand":
+            Output_Pick="手"
+        elif data[userid]["Ore"]["Pick"]=="Rock_Pick":
+            Output_Pick="石鎬"
+        elif data[userid]["Ore"]["Pick"]=="Iron_Ore_Pick":
+            Output_Pick="鐵鎬"
+
+        if data[userid]["Wood"]["Axe"]=="hand":
+            Output_Axe="手"
+        elif data[userid]["Wood"]["Axe"]=="Rock_Axe":
+            Output_Axe="石斧"
+        elif data[userid]["Wood"]["Axe"]=="Iron_Ore_Axe":
+            Output_Axe="鐵斧"
+    
         if data[userid]["name"]==user:
             embed=discord.Embed(title="您的包包有:",color=discord.Colour.random())
             embed.add_field(name="石頭:", value=data[userid]["Ore"]["Rock"], inline=False)
-            embed.add_field(name="木頭", value=data[userid]["Wood"]["Wood"], inline=False)
             embed.add_field(name="鐵礦", value=data[userid]["Ore"]["Iron_Ore"], inline=False)
+            embed.add_field(name="鎬子", value=Output_Pick, inline=False)
+            embed.add_field(name="木頭", value=data[userid]["Wood"]["Wood"], inline=False)
+            embed.add_field(name="斧頭", value=Output_Axe, inline=False)
             embed.add_field(name="neko幣", value=data[userid]["money"], inline=False)
             await ctx.respond(embed=embed)
         else:
