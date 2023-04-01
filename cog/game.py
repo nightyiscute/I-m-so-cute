@@ -14,10 +14,10 @@ class game(commands.Cog):
         userid = str(ctx.author.id)
         rannum1=random.randint(0,100)
         rannum2=random.randint(0,100)
-        with open('thing.json', 'r', encoding='utf-8') as jdata:
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
         if rannum1>rannum2:
-            with open('thing.json', 'w', encoding='utf-8') as jdata:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
                 data[userid]["money"]+=money
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
@@ -26,7 +26,7 @@ class game(commands.Cog):
             embed.add_field(name=f"你贏了{money}元",value="",inline=False)
             await ctx.respond(embed=embed)
         elif rannum2>rannum1:
-            with open('thing.json', 'w', encoding='utf-8') as jdata:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
                 data[userid]["money"]-=money
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
@@ -35,7 +35,7 @@ class game(commands.Cog):
             embed.add_field(name=f"你輸了{money}元",value="",inline=False)
             await ctx.respond(embed=embed)
         else:
-            with open('thing.json', 'w', encoding='utf-8') as jdata:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
                 data[userid]["money"]+=money*2
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
