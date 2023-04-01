@@ -20,25 +20,30 @@ class rpg(commands.Cog):
         userid = str(ctx.author.id)
         user = ctx.author.name
 
-        with open('thing.json', 'r', encoding='utf-8') as jdata:
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
 
         if data.get(userid) is None:
-            with open('thing.json', 'w', encoding='utf-8') as jdata:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
                 data[userid] = {
                     "name":user,
                     "money":100,
-                    "rock":0,
-                    "iron":0,
-                    "wood":0,
-                    "RedIron":0,
                     "power":100,
+                    "Ore":{
+                    "Rock":0,
+                    "Iron_Ore":0,
+                    "RedIron":0,
                     "Pick":"hand",
                     "Pick_durable":0,
-                    "Pick_level":0,
+                    "Pick_level":0
+                    },
+                    "Wood":{
+                    "Wood":0,
                     "Axe":"hand",
                     "Axe_durable":0,
-                    "Axe_level":0 }
+                    "Axe_level":0
+                    }
+                     }
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
             await ctx.respond('帳戶建立成功!')
@@ -51,41 +56,41 @@ class rpg(commands.Cog):
         ranitem=random.randint(0,100)
         userid = str(ctx.author.id)
         user = ctx.author.name 
-        with open('thing.json', 'r', encoding='utf-8') as jdata:
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
 
         if data.get(userid) is None:
-                await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
-                json.dump(data, jdata, ensure_ascii=False)
-                jdata.close()
+            await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+            json.dump(data, jdata, ensure_ascii=False)
+            jdata.close()
 
         else:
-            with open('thing.json', 'w', encoding='utf-8') as jdata:
-                data[userid]["rock"]+=1
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
+                data[userid]["Ore"]["Rock"]+=1
                 data[userid]["power"]-=1
-                data[userid]["rock"]+=int(ranitem/50)
-                stone=1
-                iron=0    
+                data[userid]["Ore"]["Rock"]+=int(ranitem/50)
+                Rock=1+int(ranitem/50)
+                Iron_Ore=0    
                 RedIron=0
 
-                if data[userid]["Pick_level"]>0:
-                    data[userid]["rock"]+=int(ranitem/50)
-                    stone+=int(ranitem/50)
-                    data[userid]["iron"]+=int(ranitem/60)
-                    iron+=int(ranitem/60)
-                    if data[userid]["Pick"]!="hand":
-                        data[userid]["Pick_durable"]-=1
+                if data[userid]["Ore"]["Pick_level"]>0:
+                    data[userid]["Ore"]["Rock"]+=int(ranitem/50)
+                    Rock+=int(ranitem/50)
+                    data[userid]["Ore"]["Iron_Ore"]+=int(ranitem/60)
+                    Iron_Ore+=int(ranitem/60)
+                    if data[userid]["Ore"]["Pick"]!="hand":
+                        data[userid]["Ore"]["Pick_durable"]-=1
                     
 
-                elif data[userid]["Pick_level"]>1:
-                    data[userid]["rock"]+=int(ranitem/40)
-                    data[userid]["iron"]+=int(ranitem/50)
-                    data[userid]["RedIron"]+=int(ranitem/60)
-                    stone+=int(ranitem/40)
-                    iron+=int(ranitem/50)
+                elif data[userid]["Ore"]["Pick_level"]>1:
+                    data[userid]["Ore"]["Rock"]+=int(ranitem/40)
+                    data[userid]["Ore"]["Iron_Ore"]+=int(ranitem/50)
+                    data[userid]["Ore"]["RedIron"]+=int(ranitem/60)
+                    Rock+=int(ranitem/40)
+                    Iron_Ore+=int(ranitem/50)
                     RedIron+=int(ranitem/60)
 
-                embed=discord.Embed(title=f"你獲得石頭{stone}塊,鐵礦{iron}塊,赤鐵礦{RedIron}塊", color=discord.Colour.random())
+                embed=discord.Embed(title=f"{user}獲得石頭{Rock}塊,鐵礦{Iron_Ore}塊,赤鐵礦{RedIron}塊", color=discord.Colour.random())
                 await ctx.respond(embed=embed)
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
             jdata.close()
@@ -94,63 +99,67 @@ class rpg(commands.Cog):
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
         userid = str(ctx.author.id)
-        with open('thing.json', 'r', encoding='utf-8') as jdata:
-                data = json.load(jdata)
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
+            data = json.load(jdata)
  
         if repices=="石鎬":
-            thing1="rock"
-            thing2="wood"
+            Method1="Rock"
+            Method2="Wood"
             Tool="pick"
             level=f"{Tool}_level"
             durable=f"{Tool}_durable"
-            m1=3
-            m2=2
-            end_method=f"{thing1}_{Tool}"
-            end_level=1     
+            Method1_use=3
+            Method2_use=2
+            End_method=f"{Method1}_{Tool}"
+            End_level=1     
 
         elif repices=="石斧":
-            thing1="rock"
-            thing2="wood"
+            Method1="Rock"
+            Method2="Wood"
             Tool="Axe"
             level=f"{Tool}_level"
             durable=f"{Tool}_durable"
-            m1=3
-            m2=2
-            end_method=f"{thing1}_{Tool}"
-            end_level=1 
+            Method1_use=3
+            Method2_use=2
+            End_method=f"{Method1}_{Tool}"
+            End_level=1 
 
         elif repices=="鐵鎬":
-            thing1="iron"
-            thing2="wood"
+            Method1="Iron_Ore"
+            Method2="Wood"
             Tool="Pick"
             level=f"{Tool}_level"
             durable=f"{Tool}_durable"
-            m1=3
-            m2=4
-            end_method=f"{thing1}_{Tool}"
-            end_level=2 
+            Method1_use=3
+            Method2_use=4
+            End_method=f"{Method1}_{Tool}"
+            End_level=2 
 
         elif repices=="鐵斧":
-            thing1="iron"
-            thing2="wood"
+            Method1="Iron_Ore"
+            Method2="Wood"
             Tool="Axe"
             level=f"{Tool}_level"
             durable=f"{Tool}_durable"
-            m1=3
-            m2=4
-            end_method=f"{thing1}_{Tool}"
-            end_level=2 
+            Method1_use=3
+            Method2_use=4
+            End_method=f"{Method1}_{Tool}"
+            End_level=2 
+        if Tool=="Axe":
+            Tool_Method="Wood"
+        else:
+            Tool_Method="Ore"
 
-        if data[userid][thing1]<m1 or data[userid][thing2]<m2:
+        if data[userid]["Ore"][Method1]<Method1_use or data[userid]["Wood"][Method2]<Method2_use:
             await ctx.respond("材料不夠")
 
         else:
-            with open("thing.json","w",encoding="utf-8")as jdata:
-                data[userid][thing1]-=m1
-                data[userid][thing2]-=m2
-                data[userid][Tool]=end_method
-                data[userid][level]=end_level
-                data[userid][durable]=50+(end_level-1)*20
+            with open("PlayerData.json","w",encoding="utf-8")as jdata:
+                data[userid]["Ore"][Method1]-=Method1_use
+                data[userid]["Wood"][Method2]-=Method2_use
+                data[userid][Tool_Method][Tool]=End_method
+                data[userid][Tool_Method][level]=End_level
+                data[userid][Tool_Method][durable]=50+(End_level-1)*20
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
             jdata.close()
             await ctx.respond(f"恭喜獲得{repices}")    
@@ -159,13 +168,13 @@ class rpg(commands.Cog):
     async def item(self,ctx):
         user=ctx.author.name
         userid = str(ctx.author.id)
-        with open('thing.json', 'r', encoding='utf-8') as jdata:
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
         if data[userid]["name"]==user:
             embed=discord.Embed(title="您的包包有:",color=discord.Colour.random())
-            embed.add_field(name="石頭:", value=data[userid]["rock"], inline=False)
-            embed.add_field(name="木頭", value=data[userid]["wood"], inline=False)
-            embed.add_field(name="鐵礦", value=data[userid]["iron"], inline=False)
+            embed.add_field(name="石頭:", value=data[userid]["Ore"]["Rock"], inline=False)
+            embed.add_field(name="木頭", value=data[userid]["Wood"]["Wood"], inline=False)
+            embed.add_field(name="鐵礦", value=data[userid]["Ore"]["Iron_Ore"], inline=False)
             embed.add_field(name="neko幣", value=data[userid]["money"], inline=False)
             await ctx.respond(embed=embed)
         else:
