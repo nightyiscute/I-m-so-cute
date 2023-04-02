@@ -10,7 +10,7 @@ class game(commands.Cog):
         self.bot=bot
     
     @slash_command(name="比大小",description="比你和機器人誰比較大(?")
-    async def 比大小(self,ctx,money:int):
+    async def big_or_small(self,ctx,money:int):
         userid = str(ctx.author.id)
         rannum1=random.randint(0,100)
         rannum2=random.randint(0,100)
