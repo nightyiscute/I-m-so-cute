@@ -215,6 +215,7 @@ class rpg(commands.Cog):
             embed.add_field(name="木頭", value=data[userid]["Wood"]["Wood"], inline=False)
             embed.add_field(name="斧頭", value=Output_Axe, inline=False)
             embed.add_field(name="neko幣", value=data[userid]["money"], inline=False)
+            embed.add_field(name="精力值",value=data[userid]["power"],inline=False)
             await ctx.respond(embed=embed)
         else:
             embed=discord.Embed(title="你他喵還沒申請帳號!!!!!",color=0xff0000)
