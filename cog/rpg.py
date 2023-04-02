@@ -11,10 +11,6 @@ class rpg(commands.Cog):
         self.bot=bot
  
     
-            
-            
-
-    
     @slash_command(name="成立帳戶")
     async def acc(self,ctx):
         userid = str(ctx.author.id)
@@ -94,7 +90,32 @@ class rpg(commands.Cog):
                 await ctx.respond(embed=embed)
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
             jdata.close()
-         
+
+
+    @slash_command(name="伐木")
+    async def wood(self,ctx):
+        ranitem=random.randint(0,100)
+        userid = str(ctx.author.id)
+        user = ctx.author.name 
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
+            data = json.load(jdata)
+
+        if data.get(userid) is None:
+            await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+            json.dump(data, jdata, ensure_ascii=False)
+            jdata.close()
+
+        else:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
+                data[userid]["Wood"]["Wood"]+=1
+                data[userid]["power"]-=1
+                data[userid]["Wood"]["Wood"]+=int(ranitem/50)
+                Wood=1+int(ranitem/50)
+                
+                embed=discord.Embed(title=f"{user}獲得木頭{Wood}塊", color=discord.Colour.random())
+                await ctx.respond(embed=embed)
+                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
+            jdata.close()      
                 
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
