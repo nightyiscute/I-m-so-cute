@@ -95,6 +95,13 @@ class main(commands.Cog):
         else:   
             embed=discord.Embed(title="count只有 +,-,*,/,^,√ 喔",color=discord.Colour.random())
             await ctx.respond(embed=embed)
+    
+    @slash_command(name="tag",description="可以用這個tag人")
+    async def tag(self,ctx,somebody:discord.Member,times:int):
+        for i in range(0,times):
+            await ctx.respond(somebody.mention)
+        
+
 
     
 def setup(bot):
