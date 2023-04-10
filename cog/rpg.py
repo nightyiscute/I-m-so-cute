@@ -221,6 +221,8 @@ class rpg(commands.Cog):
             embed=discord.Embed(title="你他喵還沒申請帳號!!!!!",color=0xff0000)
             await ctx.respond(embed=embed)
 
+   
+
             
         
 
