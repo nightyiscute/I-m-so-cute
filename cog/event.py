@@ -32,6 +32,10 @@ class event(commands.Cog):
             a1=random.randint(1,100)
             if a1>80:
                 await message.channel.send("別罵髒話")
+            else:
+                pass
+    
+    
 
 def setup(bot):
     bot.add_cog(event(bot))
