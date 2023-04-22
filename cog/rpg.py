@@ -129,47 +129,47 @@ class rpg(commands.Cog):
             data = json.load(jdata)
  
         if repices=="石鎬":
-            Method1="Rock"
-            Method2="Wood"
-            Tool="Pick"
-            level=f"{Tool}_level"
-            durable=f"{Tool}_durable"
-            Method1_use=3
-            Method2_use=2
-            End_method=f"{Method1}_{Tool}"
+            Method1="Rock",
+            Method2="Wood",
+            Tool="Pick",
+            level=f"{Tool}_level",
+            durable=f"{Tool}_durable",
+            Method1_use=3,
+            Method2_use=2,
+            End_method=f"{Method1}_{Tool}",
             End_level=1     
 
         elif repices=="石斧":
-            Method1="Rock"
-            Method2="Wood"
-            Tool="Axe"
-            level=f"{Tool}_level"
-            durable=f"{Tool}_durable"
-            Method1_use=3
-            Method2_use=2
-            End_method=f"{Method1}_{Tool}"
+            Method1="Rock",
+            Method2="Wood",
+            Tool="Axe",
+            level=f"{Tool}_level",
+            durable=f"{Tool}_durable",
+            Method1_use=3,
+            Method2_use=2,
+            End_method=f"{Method1}_{Tool}",
             End_level=1 
 
         elif repices=="鐵鎬":
-            Method1="Iron_Ore"
-            Method2="Wood"
-            Tool="Pick"
-            level=f"{Tool}_level"
-            durable=f"{Tool}_durable"
-            Method1_use=3
-            Method2_use=4
-            End_method=f"{Method1}_{Tool}"
+            Method1="Iron_Ore",
+            Method2="Wood",
+            Tool="Pick",
+            level=f"{Tool}_level",
+            durable=f"{Tool}_durable",
+            Method1_use=3,
+            Method2_use=4,
+            End_method=f"{Method1}_{Tool}",
             End_level=2 
 
         elif repices=="鐵斧":
-            Method1="Iron_Ore"
-            Method2="Wood"
-            Tool="Axe"
-            level=f"{Tool}_level"
-            durable=f"{Tool}_durable"
-            Method1_use=3
-            Method2_use=4
-            End_method=f"{Method1}_{Tool}"
+            Method1="Iron_Ore",
+            Method2="Wood",
+            Tool="Axe",
+            level=f"{Tool}_level",
+            durable=f"{Tool}_durable",
+            Method1_use=3,
+            Method2_use=4,
+            End_method=f"{Method1}_{Tool}",
             End_level=2 
 
         else:
