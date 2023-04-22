@@ -11,6 +11,7 @@ class rpg(commands.Cog):
         self.bot=bot
  
     
+
     @slash_command(name="成立帳戶")
     async def acc(self,ctx):
         userid = str(ctx.author.id)
@@ -45,6 +46,7 @@ class rpg(commands.Cog):
             await ctx.respond('帳戶建立成功!')
         else:
             await ctx.respond("你已經有帳戶了")
+
 
 
     @slash_command(name="採礦")
@@ -92,6 +94,7 @@ class rpg(commands.Cog):
             jdata.close()
 
 
+
     @slash_command(name="伐木")
     async def wood(self,ctx):
         ranitem=random.randint(0,100)
@@ -117,6 +120,8 @@ class rpg(commands.Cog):
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
             jdata.close()      
                 
+
+
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
         userid = str(ctx.author.id)
@@ -166,6 +171,10 @@ class rpg(commands.Cog):
             Method2_use=4
             End_method=f"{Method1}_{Tool}"
             End_level=2 
+
+        else:
+            await ctx.respond("不存在此配方")
+
         if Tool=="Axe":
             Tool_Method="Wood"
         else:
@@ -173,7 +182,6 @@ class rpg(commands.Cog):
 
         if data[userid]["Ore"][Method1]<Method1_use or data[userid]["Wood"][Method2]<Method2_use:
             await ctx.respond("材料不夠")
-
         else:
             with open("PlayerData.json","w",encoding="utf-8")as jdata:
                 data[userid]["Ore"][Method1]-=Method1_use
@@ -185,6 +193,8 @@ class rpg(commands.Cog):
             jdata.close()
             await ctx.respond(f"恭喜獲得{repices}")    
     
+
+
     @slash_command(name="查看物品")
     async def item(self,ctx):
         user=ctx.author.name
