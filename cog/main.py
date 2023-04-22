@@ -98,8 +98,10 @@ class main(commands.Cog):
     
     @slash_command(name="tag",description="可以用這個tag人")
     async def tag(self,ctx,somebody:discord.Member,times:int):
+        mes=discord.Message
         for i in range(0,times):
-            await ctx.respond(somebody.mention)
+            await ctx.respond(f"{somebody.mention}")
+            await mes.delete(self,delay=1.0)
         
 
 
