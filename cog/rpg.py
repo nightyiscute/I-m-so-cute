@@ -162,7 +162,7 @@ class rpg(commands.Cog):
 
         elif repices=="鐵鎬":
             Method1="Iron_Ore",
-            Method2="Wood",
+            Method2="Red_Wood",
             Tool="Pick",
             level=f"{Tool}_level",
             durable=f"{Tool}_durable",
@@ -173,7 +173,7 @@ class rpg(commands.Cog):
 
         elif repices=="鐵斧":
             Method1="Iron_Ore",
-            Method2="Wood",
+            Method2="Red_Wood",
             Tool="Axe",
             level=f"{Tool}_level",
             durable=f"{Tool}_durable",
