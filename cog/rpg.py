@@ -36,6 +36,7 @@ class rpg(commands.Cog):
                     },
                     "Wood":{
                     "Wood":0,
+                    "Red_Wood":0,
                     "Axe":"hand",
                     "Axe_durable":0,
                     "Axe_level":0
@@ -110,12 +111,21 @@ class rpg(commands.Cog):
 
         else:
             with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
+                Red_Wood=0
+                Wood=0
                 data[userid]["Wood"]["Wood"]+=1
                 data[userid]["power"]-=1
                 data[userid]["Wood"]["Wood"]+=int(ranitem/50)
-                Wood=1+int(ranitem/50)
+
+                if data[userid]["Wood"]["Axe_level"]>0:
+                    data[userid]["Wood"]["Wood"]+=int(ranitem/50)
+                    Wood+=int(ranitem/50)
+                    data[userid]["Wood"]["Red_Wood"]+=int(ranitem/60)
+                    Red_Wood+=int(ranitem/60)
+                    if data[userid]["Wood"]["Axe"]!="hand":
+                        data[userid]["Wood"]["Axe_durable"]-=1
                 
-                embed=discord.Embed(title=f"{user}獲得木頭{Wood}塊", color=discord.Colour.random())
+                embed=discord.Embed(title=f"{user}獲得木頭{Wood}塊,紅杉木{Red_Wood}塊", color=discord.Colour.random())
                 await ctx.respond(embed=embed)
                 json.dump(data,jdata,ensure_ascii=False,sort_keys=True)
             jdata.close()      
@@ -223,6 +233,7 @@ class rpg(commands.Cog):
             embed.add_field(name="鐵礦", value=data[userid]["Ore"]["Iron_Ore"], inline=False)
             embed.add_field(name="鎬子", value=Output_Pick, inline=False)
             embed.add_field(name="木頭", value=data[userid]["Wood"]["Wood"], inline=False)
+            embed.add_field(name="紅杉木", value=data[userid]["Wood"]["Red_Wood"], inline=False)
             embed.add_field(name="斧頭", value=Output_Axe, inline=False)
             embed.add_field(name="neko幣", value=data[userid]["money"], inline=False)
             embed.add_field(name="精力值",value=data[userid]["power"],inline=False)
