@@ -20,28 +20,28 @@ class main(commands.Cog):
         random_int=random.randint(0,100)
         if random_int<10:
             random_luck="大凶"
-        if 10<=random_int<30:
+        elif 10<=random_int<30:
             random_luck="兇"
-        if 30<=random_int<70:
+        elif 30<=random_int<70:
             random_luck="中"
-        if 70<=random_int<90:
+        elif 70<=random_int<90:
             random_luck="吉"
-        if 90<=random_int:
+        elif 90<=random_int:
             random_luck="大吉"
 
         if random_luck=="大吉":
             lcolor=0x00ff1e
             word="恭喜!今天適合買大樂透"
-        if random_luck=="吉":
+        elif random_luck=="吉":
             lcolor=0x00e1ff
             word="恭喜!今天會有小確幸"
-        if random_luck=="中":
+        elif random_luck=="中":
             lcolor=0xfbff00
             word="今天運氣不好也不壞，是個平常的一天呢"
-        if random_luck=="兇":
+        elif random_luck=="兇":
             lcolor=0xff8800
             word="今天走路要看路喔，小心踩到狗屎"
-        if random_luck=="大凶":
+        elif random_luck=="大凶":
             lcolor=0xff0000
             word="小心血光之災!"
         embed=discord.Embed(title=random_luck, color=lcolor, timestamp=datetime.datetime.now())
@@ -98,10 +98,9 @@ class main(commands.Cog):
     
     @slash_command(name="tag",description="可以用這個tag人")
     async def tag(self,ctx,somebody:discord.Member,times:int):
-        mes=discord.Message
         for i in range(0,times):
-            await ctx.respond(f"{somebody.mention}")
-            await mes.delete(self,delay=1.0)
+            await ctx.respond (f"{somebody.mention}",delete_after=1)
+            
         
 
 
