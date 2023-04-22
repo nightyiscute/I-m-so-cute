@@ -59,7 +59,7 @@ class rpg(commands.Cog):
             data = json.load(jdata)
 
         if data.get(userid) is None:
-            await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+            await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
             json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
 
@@ -105,7 +105,7 @@ class rpg(commands.Cog):
             data = json.load(jdata)
 
         if data.get(userid) is None:
-            await ctx.respond('你還沒有帳戶!,請用 "/成立帳戶" 註冊')
+            await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
             json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
 
@@ -116,6 +116,7 @@ class rpg(commands.Cog):
                 data[userid]["Wood"]["Wood"]+=1
                 data[userid]["power"]-=1
                 data[userid]["Wood"]["Wood"]+=int(ranitem/50)
+                Wood+=int(1+ranitem/50)
 
                 if data[userid]["Wood"]["Axe_level"]>0:
                     data[userid]["Wood"]["Wood"]+=int(ranitem/50)
@@ -135,74 +136,79 @@ class rpg(commands.Cog):
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
         userid = str(ctx.author.id)
-        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
-            data = json.load(jdata)
- 
-        if repices=="石鎬":
-            Method1="Rock",
-            Method2="Wood",
-            Tool="Pick",
-            level=f"{Tool}_level",
-            durable=f"{Tool}_durable",
-            Method1_use=3,
-            Method2_use=2,
-            End_method=f"{Method1}_{Tool}",
-            End_level=1     
-
-        elif repices=="石斧":
-            Method1="Rock",
-            Method2="Wood",
-            Tool="Axe",
-            level=f"{Tool}_level",
-            durable=f"{Tool}_durable",
-            Method1_use=3,
-            Method2_use=2,
-            End_method=f"{Method1}_{Tool}",
-            End_level=1 
-
-        elif repices=="鐵鎬":
-            Method1="Iron_Ore",
-            Method2="Red_Wood",
-            Tool="Pick",
-            level=f"{Tool}_level",
-            durable=f"{Tool}_durable",
-            Method1_use=3,
-            Method2_use=4,
-            End_method=f"{Method1}_{Tool}",
-            End_level=2 
-
-        elif repices=="鐵斧":
-            Method1="Iron_Ore",
-            Method2="Red_Wood",
-            Tool="Axe",
-            level=f"{Tool}_level",
-            durable=f"{Tool}_durable",
-            Method1_use=3,
-            Method2_use=4,
-            End_method=f"{Method1}_{Tool}",
-            End_level=2 
-
-        else:
-            await ctx.respond("不存在此配方")
-
-        if Tool=="Axe":
-            Tool_Method="Wood"
-        else:
-            Tool_Method="Ore"
-
-        if data[userid]["Ore"][Method1]<Method1_use or data[userid]["Wood"][Method2]<Method2_use:
-            await ctx.respond("材料不夠")
-        else:
-            with open("PlayerData.json","w",encoding="utf-8")as jdata:
-                data[userid]["Ore"][Method1]-=Method1_use
-                data[userid]["Wood"][Method2]-=Method2_use
-                data[userid][Tool_Method][Tool]=End_method
-                data[userid][Tool_Method][level]=End_level
-                data[userid][Tool_Method][durable]=50+(End_level-1)*20
-                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
+        if data.get(userid) is None:
+            await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
+            json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
-            await ctx.respond(f"恭喜獲得{repices}")    
+        else:
+            with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
+                data = json.load(jdata)
     
+            if repices=="石鎬":
+                Method1="Rock",
+                Method2="Wood",
+                Tool="Pick",
+                level=f"{Tool}_level",
+                durable=f"{Tool}_durable",
+                Method1_use=3,
+                Method2_use=2,
+                End_method=f"{Method1}_{Tool}",
+                End_level=1     
+
+            elif repices=="石斧":
+                Method1="Rock",
+                Method2="Wood",
+                Tool="Axe",
+                level=f"{Tool}_level",
+                durable=f"{Tool}_durable",
+                Method1_use=3,
+                Method2_use=2,
+                End_method=f"{Method1}_{Tool}",
+                End_level=1 
+
+            elif repices=="鐵鎬":
+                Method1="Iron_Ore",
+                Method2="Red_Wood",
+                Tool="Pick",
+                level=f"{Tool}_level",
+                durable=f"{Tool}_durable",
+                Method1_use=3,
+                Method2_use=4,
+                End_method=f"{Method1}_{Tool}",
+                End_level=2 
+
+            elif repices=="鐵斧":
+                Method1="Iron_Ore",
+                Method2="Red_Wood",
+                Tool="Axe",
+                level=f"{Tool}_level",
+                durable=f"{Tool}_durable",
+                Method1_use=3,
+                Method2_use=4,
+                End_method=f"{Method1}_{Tool}",
+                End_level=2 
+
+            else:
+                await ctx.respond("不存在此配方")
+
+            if Tool=="Axe":
+                Tool_Method="Wood"
+            else:
+                Tool_Method="Ore"
+
+            if data[userid]["Ore"][Method1]<Method1_use or data[userid]["Wood"][Method2]<Method2_use:
+                await ctx.respond("材料不夠")
+            else:
+                with open("PlayerData.json","w",encoding="utf-8")as jdata:
+                    data[userid]["Ore"][Method1]-=Method1_use
+                    data[userid]["Wood"][Method2]-=Method2_use
+                    data[userid][Tool_Method][Tool]=End_method
+                    data[userid][Tool_Method][level]=End_level
+                    data[userid][Tool_Method][durable]=50+(End_level-1)*20
+                    json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
+                jdata.close()
+                await ctx.respond(f"恭喜獲得{repices}")    
+        
 
 
     @slash_command(name="查看物品")
