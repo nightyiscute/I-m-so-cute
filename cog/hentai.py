@@ -24,10 +24,6 @@ class hentai(commands.Cog):
         if page==None:
             page=""
         await ctx.respond(f'https://nhentai.net/g/{num}/{page}')
-
-    @nhentai.command()
-    async def parody(self,ctx,parody:str):
-        await ctx.respond(f"https://nhentai.net/parody/{parody}/")
     
     @nhentai.command()
     async def tag(self,ctx,tag:str):
