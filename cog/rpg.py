@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.commands import slash_command
 
 
+
 class rpg(commands.Cog):
     option=discord.Option
     def __init__(self,bot):
@@ -62,6 +63,9 @@ class rpg(commands.Cog):
             await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
             json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
+        
+        elif userid["power"]<0:
+            await ctx.respond("你沒體力了")
 
         else:
             with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
@@ -109,6 +113,9 @@ class rpg(commands.Cog):
             json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
 
+        elif userid["power"]<0:
+            await ctx.respond("你沒體力了")
+
         else:
             with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
                 Red_Wood=0
@@ -136,56 +143,56 @@ class rpg(commands.Cog):
     @slash_command(name="合成")
     async def mix(self,ctx,repices:option(str,"物品",choices=["石鎬","石斧","鐵鎬","鐵斧"])):
         userid = str(ctx.author.id)
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
+            data = json.load(jdata)
         if data.get(userid) is None:
             await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
             json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
         else:
-            with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
-                data = json.load(jdata)
-    
+            
             if repices=="石鎬":
-                Method1="Rock",
-                Method2="Wood",
-                Tool="Pick",
-                level=f"{Tool}_level",
-                durable=f"{Tool}_durable",
-                Method1_use=3,
-                Method2_use=2,
-                End_method=f"{Method1}_{Tool}",
+                Method1="Rock"
+                Method2="Wood"
+                Tool="Pick"
+                level=f"{Tool}_level"
+                durable=f"{Tool}_durable"
+                Method1_use=3
+                Method2_use=2
+                End_method=f"{Method1}_{Tool}"
                 End_level=1     
 
             elif repices=="石斧":
-                Method1="Rock",
-                Method2="Wood",
-                Tool="Axe",
-                level=f"{Tool}_level",
-                durable=f"{Tool}_durable",
-                Method1_use=3,
-                Method2_use=2,
-                End_method=f"{Method1}_{Tool}",
+                Method1="Rock"
+                Method2="Wood"
+                Tool="Axe"
+                level=f"{Tool}_level"
+                durable=f"{Tool}_durable"
+                Method1_use=3
+                Method2_use=2
+                End_method=f"{Method1}_{Tool}"
                 End_level=1 
 
             elif repices=="鐵鎬":
-                Method1="Iron_Ore",
-                Method2="Red_Wood",
-                Tool="Pick",
-                level=f"{Tool}_level",
-                durable=f"{Tool}_durable",
-                Method1_use=3,
-                Method2_use=4,
-                End_method=f"{Method1}_{Tool}",
+                Method1="Iron_Ore"
+                Method2="Red_Wood"
+                Tool="Pick"
+                level=f"{Tool}_level"
+                durable=f"{Tool}_durable"
+                Method1_use=3
+                Method2_use=4
+                End_method=f"{Method1}_{Tool}"
                 End_level=2 
 
             elif repices=="鐵斧":
-                Method1="Iron_Ore",
-                Method2="Red_Wood",
-                Tool="Axe",
-                level=f"{Tool}_level",
-                durable=f"{Tool}_durable",
-                Method1_use=3,
-                Method2_use=4,
-                End_method=f"{Method1}_{Tool}",
+                Method1="Iron_Ore"
+                Method2="Red_Wood"
+                Tool="Axe"
+                level=f"{Tool}_level"
+                durable=f"{Tool}_durable"
+                Method1_use=3
+                Method2_use=4
+                End_method=f"{Method1}_{Tool}"
                 End_level=2 
 
             else:
