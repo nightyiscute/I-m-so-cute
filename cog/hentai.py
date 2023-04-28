@@ -28,7 +28,7 @@ class hentai(commands.Cog):
     @nhentai.command()
     async def tag(self,ctx,tag:str):
         await ctx.respond(f"https://nhentai.net/tag/{tag}/")
-    
+
     @nhentai.command()
     async def random_tag(self,ctx):
         ran=random.randint(0,148)
