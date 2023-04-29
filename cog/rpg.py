@@ -4,8 +4,6 @@ import json
 from discord.ext import commands
 from discord.commands import slash_command
 
-
-
 class rpg(commands.Cog):
     option=discord.Option
     def __init__(self,bot):
@@ -255,7 +253,22 @@ class rpg(commands.Cog):
             embed=discord.Embed(title="你他喵還沒申請帳號!!!!!",color=0xff0000)
             await ctx.respond(embed=embed)
 
-   
+    @slash_command(name="旅館",description="提供休息的場所")
+    async def hotel(self,ctx):
+        userid = str(ctx.author.id)
+        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
+            data = json.load(jdata)
+        if data[userid]["money"]<50:
+            await ctx.respond("沒錢的傢伙給我滾!")
+        else:
+            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
+                data[userid]["money"]-=50
+                data[userid]["power"]=100
+                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
+                jdata.close()
+
+        
+
 
             
         
