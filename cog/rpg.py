@@ -39,7 +39,8 @@ class rpg(commands.Cog):
                     "Axe":"hand",
                     "Axe_durable":0,
                     "Axe_level":0
-                    }
+                    },
+                    "Today_daliy":0
                      }
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
@@ -253,21 +254,27 @@ class rpg(commands.Cog):
             embed=discord.Embed(title="你他喵還沒申請帳號!!!!!",color=0xff0000)
             await ctx.respond(embed=embed)
 
-    @slash_command(name="旅館",description="提供休息的場所")
-    async def hotel(self,ctx):
-        userid = str(ctx.author.id)
+
+
+    @slash_command(name="每日簽到",description="補充精力值和一些neko幣")
+    async def daliy(self,ctx):
+        userid=str(ctx.author.id)
         with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
             data = json.load(jdata)
-        if data[userid]["money"]<50:
-            await ctx.respond("沒錢的傢伙給我滾!")
+        if data.get(userid) is None:
+            await ctx.respond('你還沒有帳戶! \n 請用 "/成立帳戶" 註冊')
+            json.dump(data, jdata, ensure_ascii=False)
+            jdata.close()
         else:
-            with open('PlayerData.json', 'w', encoding='utf-8') as jdata:
-                data[userid]["money"]-=50
+            if data["New_Day"]==1 and data[userid]["Today_daliy"]==0:
+                data[userid]["money"]+=100
                 data[userid]["power"]=100
-                json.dump(data,jdata,ensure_ascii=False,sort_keys=True)     
-                jdata.close()
+                data[userid]["Today_daliy"]+=1
+            else:
+                await ctx.respond("你已經簽到過了")  
+                
 
-        
+
 
 
             
