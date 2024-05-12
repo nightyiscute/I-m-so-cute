@@ -16,46 +16,52 @@ class main(commands.Cog):
     
     @slash_command(name="luck",description="text your luck")
     async def luck(self,ctx):
-        with open('PlayerData.json', 'r', encoding='utf-8') as jdata:
-            data = json.load(jdata)
-        if data.get("userid") is None:
-            await ctx.respond("請先成立帳戶")
-        else:
-            if data.get("luck")>0:
-                await ctx.respond(embed=embed)
-            else:
-                random_int=random.randint(0,100)
-                if random_int<10:
-                    random_luck="大凶"
-                elif 10<=random_int<30:
-                    random_luck="兇"
-                elif 30<=random_int<70:
-                    random_luck="中"
-                elif 70<=random_int<90:
-                    random_luck="吉"
-                elif 90<=random_int:
-                    random_luck="大吉"
-
-                if random_luck=="大吉":
-                    lcolor=0x00ff1e
-                    word="恭喜!今天適合買大樂透"
-                elif random_luck=="吉":
-                    lcolor=0x00e1ff
-                    word="恭喜!今天會有小確幸"
-                elif random_luck=="中":
-                    lcolor=0xfbff00
-                    word="今天運氣不好也不壞，是個平常的一天呢"
-                elif random_luck=="兇":
-                    lcolor=0xff8800
-                    word="今天走路要看路喔，小心踩到狗屎"
-                elif random_luck=="大凶":
-                    lcolor=0xff0000
-                    word="小心血光之災!"
-                embed=discord.Embed(title=random_luck, color=lcolor, timestamp=datetime.datetime.now())
-                embed.set_author(name="今日運氣")
-                embed.add_field(name=word,value="以上就是占卜結果", inline=False)
-                embed.set_footer(text=f"{ctx.author.display_name}占卜於")
-                await ctx.respond(embed=embed)
+        userid = str(ctx.author.id)
+        today=datetime.datetime.now().strftime("%M%d")
+        user_num=userid+today
+        def luck_1(num):
+            if num==10:
+                random_luck="大凶"
+            elif 8<=num<=9:
+                random_luck="兇"
+            elif 3<=num<=7:
+                random_luck="中"
+            elif 1<=num<3:
+                random_luck="吉"
+            elif 0<=num:
+                random_luck="大吉"
+            return random_luck
+        if (user_num%3)==0:
+            The0Fork=user_num%10
+            random_luck=luck_1(The0Fork)
+        elif (user_num%3)==1:
+            The1Fork=user_num%6*2
+            random_luck=luck_1(The1Fork)
+        elif (user_num%3)==2:
+            The2Fork=user_num%9+5*2-10
+            random_luck=luck_1(The2Fork)
+            
+        if random_luck=="大吉":
+            lcolor=0x00ff1e
+            word="恭喜!今天適合買大樂透"
+        elif random_luck=="吉":
+            lcolor=0x00e1ff
+            word="恭喜!今天會有小確幸"
+        elif random_luck=="中":
+            lcolor=0xfbff00
+            word="今天運氣不好也不壞，是個平常的一天呢"
+        elif random_luck=="兇":
+            lcolor=0xff8800
+            word="今天走路要看路喔，小心踩到狗屎"
+        elif random_luck=="大凶":
+            lcolor=0xff0000
+            word="小心血光之災!"
+            
+        embed=discord.Embed(title=random_luck, color=lcolor, timestamp=datetime.datetime.now())
+        embed.set_author(name="今日運氣")
+        embed.add_field(name=word,value="以上就是占卜結果", inline=False)
+        embed.set_footer(text=f"{ctx.author.display_name}占卜於")
+        await ctx.respond(embed=embed)
 
     @slash_command(name='dice',description='dice number')
     async def dice(self,ctx,number:int):
