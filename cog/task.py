@@ -16,7 +16,7 @@ class Task(commands.Cog):
 async def daliy_check(self):
     T=datetime.datetime.now().strftime("%H%M")
     if T-2356>=-4 and T-0000<=4:
-        self.check_num +=1
+        self.check_num =1
         if self.check_num>1:
             self.check_num=0
             return
