@@ -1,4 +1,5 @@
 #it's out of work
+'''
 import random
 import discord
 import json
@@ -285,3 +286,4 @@ class rpg(commands.Cog):
 
 def setup(bot):
     bot.add_cog(rpg(bot))
+'''
