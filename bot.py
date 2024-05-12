@@ -27,7 +27,7 @@ async def ping(ctx):
 @bot.slash_command(description="重載Cog")
 async def reload(ctx):
     reload=discord.ui.Select(
-        placeholder= "Choose a Cog!", # 沒選選項時選項框上的字
+        placeholder= "Choose a Cog!", # 沒選選項時選項框上的字 
             min_values = 1, # 最少幾個選項
             max_values = 1, # 最多幾個選項
             options = [
