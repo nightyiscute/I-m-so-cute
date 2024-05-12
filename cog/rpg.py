@@ -1,3 +1,4 @@
+#it's out of work
 import random
 import discord
 import json
