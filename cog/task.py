@@ -1,4 +1,5 @@
 #it's out of work
+'''
 import discord
 import datetime
 import json
@@ -28,4 +29,4 @@ async def daliy_check(self):
                 data["New_Day"]=1
                 json.dump(data, jdata, ensure_ascii=False)
             jdata.close()
-        
+'''
