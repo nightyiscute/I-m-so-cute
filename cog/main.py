@@ -18,7 +18,6 @@ class main(commands.Cog):
     async def luck(self,ctx):
         userid = int(ctx.author.id)
         today=datetime.datetime.now().strftime("%M%d")
-        print(type(today),type(userid))
         user_num=userid+int(today)
         def luck_1(num):
             if num==10:
