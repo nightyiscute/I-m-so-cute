@@ -16,9 +16,10 @@ class main(commands.Cog):
     
     @slash_command(name="luck",description="text your luck")
     async def luck(self,ctx):
-        userid = str(ctx.author.id)
+        userid = int(ctx.author.id)
         today=datetime.datetime.now().strftime("%M%d")
-        user_num=userid+today
+        print(type(today),type(userid))
+        user_num=userid+int(today)
         def luck_1(num):
             if num==10:
                 random_luck="大凶"
