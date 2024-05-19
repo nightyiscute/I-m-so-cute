@@ -62,6 +62,8 @@ class main(commands.Cog):
         embed.set_footer(text=f"{ctx.author.display_name}占卜於")
         await ctx.respond(embed=embed)
 
+
+
     @slash_command(name='dice',description='dice number')
     async def dice(self,ctx,number:int):
         ranint=random.randint(1,number)
@@ -70,6 +72,8 @@ class main(commands.Cog):
         embed.add_field(name=f"你骰了{number}面骰",value="以上就是骰子結果", inline=False)
         embed.set_footer(text=f"{ctx.author.display_name}骰於")
         await ctx.respond(embed=embed)
+
+
 
     @slash_command(name="計算機",description="就是個計算機")
     async def computer(self,ctx,number1:float,count:option(str,"運算符號",choices=["+","-","*","/","√","^"]),number2:float):
@@ -107,6 +111,8 @@ class main(commands.Cog):
         else:   
             embed=discord.Embed(title="count只有 +,-,*,/,^,√ 喔",color=discord.Colour.random())
             await ctx.respond(embed=embed)
+    
+
     
     @slash_command(name="tag",description="可以用這個tag人")
     async def tag(self,ctx,somebody:discord.Member,times:int):
