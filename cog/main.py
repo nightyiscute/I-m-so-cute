@@ -57,10 +57,10 @@ class main(commands.Cog):
             lcolor=0xff0000
             word="小心血光之災!"
             
-        embed=discord.Embed(title=random_luck, color=lcolor, timestamp=datetime.datetime.now())
+        embed=discord.Embed(title=random_luck,description=word,color=lcolor, timestamp=datetime.datetime.now())
         embed.set_author(name="今日運氣")
         embed.set_footer(text=f"{ctx.author.display_name}占卜於")
-        await ctx.respond(embed=embed)
+        await ctx.send(embed=embed)
 
 
 
