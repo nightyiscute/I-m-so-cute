@@ -59,8 +59,9 @@ class main(commands.Cog):
             
         embed=discord.Embed(title=random_luck,description=word,color=lcolor, timestamp=datetime.datetime.now())
         embed.set_author(name="今日運氣")
+        embed.add_field(name="local", value="", inline=True)
         embed.set_footer(text=f"{ctx.author.display_name}占卜於")
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
 
 
