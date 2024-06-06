@@ -1,3 +1,4 @@
+'''
 import random
 import discord
 import json
@@ -48,4 +49,4 @@ class game(commands.Cog):
 
 def setup(bot):
     bot.add_cog(game(bot))
-    
+'''
