@@ -75,46 +75,6 @@ class main(commands.Cog):
         await ctx.respond(embed=embed)
 
 
-
-    @slash_command(name="計算機",description="就是個計算機")
-    async def computer(self,ctx,number1:float,count:option(str,"運算符號",choices=["+","-","*","/","√","^"]),number2:float):
-        
-        if count=="+":
-            embed=discord.Embed(title=number1+number2,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-
-        elif count=="-":
-            embed=discord.Embed(title=number1-number2,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-
-        elif count=="*":
-            embed=discord.Embed(title=number1*number2,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-
-        elif count=="/":
-            embed=discord.Embed(title=number1/number2,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-        
-        elif count=="^":
-            number1a=number1
-            for i in range(1,number2):
-                number1=number1*number1a
-            embed=discord.Embed(title=number1,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-
-        elif count=="√":
-            number1a=number1
-            for i in range(1,number2):
-                number1=number1a**0.5
-            embed=discord.Embed(title=number1,color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-
-        else:   
-            embed=discord.Embed(title="count只有 +,-,*,/,^,√ 喔",color=discord.Colour.random())
-            await ctx.respond(embed=embed)
-    
-
-    
     @slash_command(name="tag",description="可以用這個tag人")
     async def tag(self,ctx,somebody:discord.Member,times:int):
         if times>20:
@@ -122,7 +82,13 @@ class main(commands.Cog):
         else:
             for i in range(0,times):
                 await ctx.respond(f"{somebody.mention}",delete_after=1)
-            
+
+    @slash_command(name="公告",description='有什麼想公告的嗎?')
+    async def announcement(self,ctx,標題:str,內文:str):
+        embed=discord.Embed(title=標題,color=discord.Colour.random(),timestamp=datetime.datetime.now())
+        embed.add_field(name=內文,value="",inline=False)
+        embed.set_footer(text=f"{ctx.author.display_name}公告於")
+        await ctx.respond(embed=embed)
         
 
 
