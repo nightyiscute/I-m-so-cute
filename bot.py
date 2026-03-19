@@ -6,7 +6,7 @@ from discord.ui import View,Select
 
 with open('thing.json',mode='r',encoding='utf8')as jfile: #打開setting.json,模式是read,命名為jfile
     jdata=json.load(jfile)
-bot=commands.Bot(command_prefix="!",intents=discord.Intents.all())
+bot=discord.Bot(command_prefix="!",intents=discord.Intents.all())
 view=discord.ui.View
       
 for file in os.listdir('./cog'):
@@ -33,7 +33,8 @@ async def reload(ctx):
             options = [
                 discord.SelectOption(label="hentai",description="Cog(hentai)"),
                 discord.SelectOption(label="main",description="Cog(main)"),
-                discord.SelectOption(label="event",description="Cog(event)")
+                discord.SelectOption(label="event",description="Cog(event)"),
+                discord.SelectOption(label="game",description="Cog(game)")
             ])
     async def callback(interaction): #有選選項時
         bot.reload_extension(f'cog.{reload.values[0]}')
