@@ -1,8 +1,8 @@
 
 import random
 import discord
-import json
 from discord.ext import commands
+from discord.commands import slash_command
 
 
 
@@ -10,7 +10,7 @@ class game(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
     
-    @commands.slash_command(name="比大小",description="比你和機器人誰比較大(?")
+    @slash_command(name="big_or_small",description="比你和機器人誰比較大(?")
     async def big_or_small(self,ctx):
         rannum1=random.randint(0,100)
         rannum2=random.randint(0,100)
