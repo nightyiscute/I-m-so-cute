@@ -8,7 +8,7 @@ with open('thing.json',mode='r',encoding='utf8')as jfile: #打開setting.json,�
     jdata=json.load(jfile)
 bot=discord.Bot(command_prefix="!",intents=discord.Intents.all())
 view=discord.ui.View
-      
+
 for file in os.listdir('./cog'):
     if file.endswith('.py'):
         try:
