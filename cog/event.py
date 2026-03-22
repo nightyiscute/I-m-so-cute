@@ -35,7 +35,7 @@ class event(commands.Cog):
             else:
                 pass
     
-   
+
     
 
 def setup(bot):
